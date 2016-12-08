@@ -15,6 +15,18 @@ class RedditNewsDataResponse(
         val title: String,
         val num_comments: Int,
         val created: Long,
-        val thumbnail: String,
+        val preview: RedditPreview?,
+        val url: String
+)
+
+class RedditPreview (
+        val images: List<RedditImage>
+)
+
+class RedditImage (
+        val source: RedditSource
+)
+
+class RedditSource (
         val url: String
 )

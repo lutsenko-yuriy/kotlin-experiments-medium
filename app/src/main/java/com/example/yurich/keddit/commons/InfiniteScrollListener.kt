@@ -1,18 +1,18 @@
 package com.example.yurich.keddit.commons
 
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.Log
 
 class InfiniteScrollListener(
         val func: () -> Unit,
-        val layoutManager: LinearLayoutManager
+        val layoutManager: StaggeredGridLayoutManager
 ) : RecyclerView.OnScrollListener() {
 
     private var previousTotal = 0
     private var loading = true
     private var visibleThreshold = 2
-    private var firstVisibleItem = 0
+    private var firstVisibleItem: IntArray? = null
     private var visibleItemCount = 0
     private var totalItemCount = 0
 
@@ -22,7 +22,7 @@ class InfiniteScrollListener(
         if (dy > 0) {
             visibleItemCount = recyclerView.childCount
             totalItemCount = layoutManager.itemCount
-            firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+            firstVisibleItem = layoutManager.findFirstVisibleItemPositions(firstVisibleItem)
 
             if (loading) {
                 if (totalItemCount > previousTotal) {
@@ -31,7 +31,7 @@ class InfiniteScrollListener(
                 }
             }
             if (!loading && (totalItemCount - visibleItemCount)
-                    <= (firstVisibleItem + visibleThreshold)) {
+                    <= (firstVisibleItem!!.min()!! + visibleThreshold)) {
                 // End has been reached
                 Log.i("InfiniteScrollListener", "End reached")
                 func()
