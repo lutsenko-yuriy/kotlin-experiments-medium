@@ -11,6 +11,7 @@ class KedditApp : Application() {
         lateinit var newsComponent: NewsComponent
     }
 
+    @SuppressWarnings("deprecated")
     override fun onCreate() {
         super.onCreate()
         newsComponent = DaggerNewsComponent.builder()

@@ -26,10 +26,7 @@ class NewsManager @Inject constructor(private val api: NewsApi) {
                             item.title,
                             item.num_comments,
                             item.created,
-                            if (item.preview != null)
-                                item.preview.images[0].source.url
-                            else
-                                "",
+                            item.thumbnail,
                             item.url
                     )
                 }

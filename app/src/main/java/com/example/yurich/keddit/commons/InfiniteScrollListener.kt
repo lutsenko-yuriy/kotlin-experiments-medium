@@ -31,7 +31,7 @@ class InfiniteScrollListener(
                 }
             }
             if (!loading && (totalItemCount - visibleItemCount)
-                    <= (firstVisibleItem!!.min()!! + visibleThreshold)) {
+                    <= (firstVisibleItem!!.max()!! + visibleThreshold)) {
                 // End has been reached
                 Log.i("InfiniteScrollListener", "End reached")
                 func()

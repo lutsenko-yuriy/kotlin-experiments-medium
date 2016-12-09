@@ -41,7 +41,7 @@ class NewsFragment : RxBaseFragment() {
         news_list.apply {
             setHasFixedSize(true) // use this setting to improve performance
             val staggeredGridLayoutManager =
-                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             layoutManager = staggeredGridLayoutManager
             clearOnScrollListeners()
             addOnScrollListener(InfiniteScrollListener(
