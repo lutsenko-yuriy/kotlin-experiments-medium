@@ -1,7 +1,7 @@
 package com.example.yurich.keddit.features.news.adapter
 
-import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.ViewGroup
 import com.example.yurich.keddit.R
 import com.example.yurich.keddit.commons.RedditNewsItem
@@ -30,7 +30,7 @@ class NewsDelegateAdapter() : ViewTypeDelegateAdapter {
 
         init {
             itemView.setOnClickListener {
-                val pos = this.adapterPosition
+
             }
         }
 

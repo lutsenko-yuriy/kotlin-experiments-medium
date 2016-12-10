@@ -2,6 +2,7 @@ package com.example.yurich.keddit.features.news.adapter
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.ViewGroup
 import com.example.yurich.keddit.commons.RedditNewsItem
 import com.example.yurich.keddit.commons.adapter.AdapterConstants
@@ -69,4 +70,14 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
 
+    fun swapItems(src: Int, dst: Int) {
+        if (src in 0..getLastPosition()
+                && items[src].getViewType() != AdapterConstants.LOADING
+                && items[dst].getViewType() != AdapterConstants.LOADING) {
+            val t = items[src]
+            items[src] = items[dst]
+            items[dst] = t
+        }
+        notifyItemMoved(src, dst)
+    }
 }

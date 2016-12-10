@@ -1,9 +1,12 @@
 package com.example.yurich.keddit
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Vibrator
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import com.example.yurich.keddit.commons.RedditNews
 import com.example.yurich.keddit.commons.extensions.inflate
 import com.example.yurich.keddit.features.news.NewsManager
 import com.example.yurich.keddit.features.news.adapter.NewsAdapter
+import com.example.yurich.keddit.features.news.draghelper.NewsDragHelperCallback
 import kotlinx.android.synthetic.main.news_fragment.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -39,10 +43,18 @@ class NewsFragment : RxBaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         news_list.apply {
-            setHasFixedSize(true) // use this setting to improve performance
+            setHasFixedSize(true)
+
             val staggeredGridLayoutManager =
                     StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             layoutManager = staggeredGridLayoutManager
+
+            val callback = NewsDragHelperCallback(
+                    context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            )
+            val touchHelper = ItemTouchHelper(callback)
+            touchHelper.attachToRecyclerView(this)
+
             clearOnScrollListeners()
             addOnScrollListener(InfiniteScrollListener(
                     { requestNews() },
