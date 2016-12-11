@@ -5,11 +5,14 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import com.example.yurich.keddit.features.news.adapter.NewsAdapter
 import com.example.yurich.keddit.features.news.adapter.NewsDelegateAdapter
+import kotlinx.android.synthetic.main.news_item.view.*
 
-/**
- * Created by yurich on 10.12.16.
- */
 class NewsDragHelperCallback(val vibrator: Vibrator) : ItemTouchHelper.Callback() {
+
+    val DRAG_ALPHA = 0.7f
+    val DRAG_LIFT = 4
+
+    val  VIBRATION_DURATION = 10L
 
     override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
         return makeMovementFlags(
@@ -33,10 +36,11 @@ class NewsDragHelperCallback(val vibrator: Vibrator) : ItemTouchHelper.Callback(
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         if (viewHolder is NewsDelegateAdapter.NewsViewHolder) {
-            viewHolder.apply {
+            viewHolder.itemView.apply {
                 if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-                    itemView.alpha = 0.5f
-                    vibrator.vibrate(10)
+                    alpha = DRAG_ALPHA
+                    news_card.cardElevation += DRAG_LIFT
+                    vibrator.vibrate(VIBRATION_DURATION)
                 }
             }
         }
@@ -46,7 +50,9 @@ class NewsDragHelperCallback(val vibrator: Vibrator) : ItemTouchHelper.Callback(
 
     override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) {
         super.clearView(recyclerView, viewHolder)
-
-        viewHolder!!.itemView.alpha = 1f
+        viewHolder!!.itemView.apply {
+            alpha = 1f
+            news_card.cardElevation -= DRAG_LIFT
+        }
     }
 }

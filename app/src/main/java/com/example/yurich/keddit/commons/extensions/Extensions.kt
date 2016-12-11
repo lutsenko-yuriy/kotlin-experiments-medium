@@ -19,7 +19,7 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {
 
 fun ImageView.loadImg(imageUrl: String) {
     if (TextUtils.isEmpty(imageUrl)) {
-        Glide.with(context).load(R.mipmap.ic_launcher).into(this)
+        Glide.with(context).load(R.drawable.ic_reddit).into(this)
     } else {
         Glide.with(context).load(imageUrl).into(this)
     }

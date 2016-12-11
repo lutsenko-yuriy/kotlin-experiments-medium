@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,14 +15,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Fabric.with(this, Crashlytics())
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
+
+        setupToolbar()
 
         if (savedInstanceState == null) {
             changeFragment(NewsFragment())
         }
+
     }
 
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+
+        toolbar.setLogo(R.drawable.logo_reddit)
+
+        toolbar.title = getString(R.string.title)
+        toolbar.setTitleTextColor(R.color.title_color)
+        toolbar.subtitle = getString(R.string.subtitle)
+        toolbar.setSubtitleTextColor(R.color.subtitle_color)
+
+    }
+
+    @SuppressWarnings("WeakerAccess")
     fun changeFragment(f: Fragment, cleanStack: Boolean = false) {
         val ft = supportFragmentManager.beginTransaction()
 
